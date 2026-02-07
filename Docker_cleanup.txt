@@ -1,0 +1,11 @@
+docker stop $(docker ps -aq);
+docker rm -f $(docker ps -aq);
+yes y | docker system prune -a;
+docker volume rm -f $(docker volume ls)
+ 
+cd /etc/init.d/
+./restart_slave.sh
+
+No_Space_Left_Cleanup [Infrastructure] [Jenkins] (sungard.corp)
+
+rm -rf /var/lib/docker

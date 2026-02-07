@@ -1,0 +1,18 @@
+Connect to a repo where helm charts are stored:
+- helm repo add stableNexus http://nexus1.leo-portal.internal.sungard.corp:8081/repository/helm-raw/charts
+
+Update all helm dependencies:
+- helm repo update
+
+Search for helm chart:
+- helm search repo [chart] -l
+
+MANUAL DEPLOY:
+
+- helm repo update -n markos
+- helm pull stable/fiscd-core-bo-pre-procossor --version 202509.0.0-release.7 -n markos
+- tar -xf fiscd-core-bo-pre-procossor-202509.0.0-release.7.tgz
+- helm install brm -f values-brm.yaml fiscd-core-brm-application -n markos
+- kubectl scale --replicas 1 deploy -l fis.cd.brm.prereq=true -n markos
+- kubectl scale --replicas 1 deploy -l fis.cd.brm.online=true -n markos
+- scp root@[VM_IP]:/root/ivan/FISCD-221204/*.log
