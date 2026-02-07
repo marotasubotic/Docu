@@ -1,0 +1,11 @@
+To disable TLS/SSL verification for a single git command:
+git -c http.sslVerify=false clone https://example.com/path/to/git
+
+Create ssh config file to force using a private key when connecting to certain server:
+Host [HOSTNAME]
+    ...OPTIONS...
+
+Example of ssh config file:
+Host leo-stash.internal.sungard.corp
+    HostkeyAlgorithms +ssh-rsa
+    PubkeyAcceptedAlgorithms +ssh-rsa
