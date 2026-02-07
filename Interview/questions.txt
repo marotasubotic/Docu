@@ -1,0 +1,86 @@
+OPEN TELEMETRY CONCEPT: 
+is a vendor‑neutral framework (APIs, SDKs, etc.) for generating, collecting, processing, and exporting traces, metrics, and logs from apps and infrastructure.
+
+GRAFANA: 
+is an open-source observability and monitoring platform that lets you query, visualize, and alert on data from multiple sources through interactive dashboards.
+
+Workflow
+- You open a dashboard or run a query
+- UI sends request to backend via REST API
+- Validates permissions, forwards query to data source
+- Data source (Prometheus, Elasticsearch, Loki, SQL) returns results 
+- Grafana applies transformations and renders panels in the UI
+
+RESOURCE MANAGEMENT BENEFITS:
+- Centralized Artifact Storage
+- Dependency Management
+- Versioning & Traceability
+- Integration with CI/CD
+- Performance & Scalability
+
+PROBE READINESS IN K8S:
+is a health check that tells the kubelet whether a container is ready to accept traffic.
+
+There are 3 types of probe readiness:
+- Startup probe (waits for app to finish initializing)
+- Readiness probe (ensures app is ready for traffic)
+- Liveness probe (ensures app stays healthy over time)
+
+CLUSTER IP IN K8S:
+- It creates a virtual IP address that is only reachable inside the cluster
+- It enables service discovery and load balancing for internal communication between components
+
+HOW TO PROPAGATE THE CHANGE OF MODIFIED CREDS IN VAULT TO K8S POD:
+Two concepts are used in enterprises:
+- Vault Injector (Sidecar Pattern) -> better suited for apps that require live reload
+- Vault Operator (Kubernetes-Native) -> better suited for helm based deploys
+
+Vault Agent Injector (Sidecar Pattern):
+- Authenticates to Vault using the Pod’s Kubernetes ServiceAccount
+- Retrieves secrets from Vault and writes them to a shared volume
+- Manages token renewal
+
+Vault Operator:
+- Pods mount these Kubernetes Secrets as usual
+- Secrets still reside in Kubernetes, so RBAC and encryption-at-rest must be enforced
+
+How you would upgrade K8s cluster with 0 run-time
+1. Blue/Green Node Pools:
+- Creates a new node pool (green) while keeping the old pool (blue)
+- Workloads are gradually rescheduled from blue nodes to green nodes using taints/tolerations or node selectors
+- If issues occur, you can reschedule workloads back to the old pool without changing cluster-level resources
+
+2. Blue/Green Cluster
+- Provision new cluster and replicate namespaces, RBAC, and policies.
+- Deploy workloads and validate functionality.
+- Switch traffic using load balancer or ingress routing.
+- Retire old cluster after full cutover
+
+DECLARATIVE VS IMPERATIVE IaC:
+- Declarative -> you define the desired end state of your infrastructure, and the tool (Terraform) figures out the rest
+- Imperative -> you provide step-by-step instructions on how to achieve the desired state.
+
+AZURE CONCEPTS:
+Fundamentals:
+- Cloud Models (public, private or hybrid cloud)
+- Service Models (IaaS, PaaS, SaaS)
+
+Architectural Components:
+- Regions & Availability Zones
+- Compute Services (Azure VMs, Azure K8s, Azure functions - event driven apps)
+- Storage Services
+- Networking
+- Identity & Security
+
+CONCERS FOR WRITING CUSTOM DOCKER FILES:
+- Exposing sensitive info (creds)
+- Privilege (containers by default run as root)
+- Untrusted base images, dependecies
+
+Provisioning tool what it means:
+- Scaling
+- Load balancing
+- High availability
+- Fault tolerance
+- Storage orchestration
+- Rollouts & Rollbacks
